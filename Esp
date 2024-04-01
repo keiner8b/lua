@@ -1,0 +1,37 @@
+-- Function to create a nametag for a player
+local function createNametag(player)
+    local nametag = Instance.new("BillboardGui")
+    nametag.Adornee = player.Character:WaitForChild("Head")
+    nametag.Size = UDim2.new(0, 100, 0, 50)
+    nametag.StudsOffset = Vector3.new(0, 3, 0) -- Adjust the offset based on the height of the player
+    nametag.AlwaysOnTop = true
+    
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Text = player.Name
+    textLabel.Font = Enum.Font.SourceSansBold
+    textLabel.TextSize = 20
+    textLabel.Size = UDim2.new(1, 0, 1, 0)
+    textLabel.TextColor3 = Color3.new(1, 1, 1) -- White color
+    textLabel.BackgroundTransparency = 1
+    textLabel.Parent = nametag
+
+    nametag.Parent = game:GetService("CoreGui")
+end
+
+-- Function to create nametags for all players
+local function createNametagsForAllPlayers()
+    for _, player in ipairs(game.Players:GetPlayers()) do
+        if player.Character then
+            createNametag(player)
+        end
+    end
+end
+
+-- Create nametags for all players when the game starts
+createNametagsForAllPlayers()
+
+-- Keep updating nametags every 5 seconds
+while true do
+    wait(5)
+    createNametagsForAllPlayers()
+end
